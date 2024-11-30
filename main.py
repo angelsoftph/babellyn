@@ -25,7 +25,7 @@ def get_db():
         db.close()
 
 
-@app.get("/languages", response_model=List[schemas.Language])
+@app.get("/languages", tags=["Languages"], response_model=List[schemas.Language])
 def list_languages(db: Session = Depends(get_db)):
     """
     List all available languages
@@ -34,7 +34,7 @@ def list_languages(db: Session = Depends(get_db)):
     return defs.list_languages(db)
 
 
-@app.post("/languages", response_model=schemas.Language)
+@app.post("/languages", tags=["Languages"], response_model=schemas.Language)
 def create_language(language: schemas.LanguageCreate, db: Session = Depends(get_db)):
     """
     Create a new language
@@ -43,7 +43,7 @@ def create_language(language: schemas.LanguageCreate, db: Session = Depends(get_
     return defs.create_language(db, language)
 
 
-@app.get("/phrases", response_model=List[schemas.Phrase])
+@app.get("/phrases", tags=["Phrases"], response_model=List[schemas.Phrase])
 def list_phrases(db: Session = Depends(get_db)):
     """
     List all available phrases
@@ -52,7 +52,7 @@ def list_phrases(db: Session = Depends(get_db)):
     return defs.list_phrases(db)
 
 
-@app.post("/phrases", response_model=schemas.Phrase)
+@app.post("/phrases", tags=["Phrases"], response_model=schemas.Phrase)
 def create_phrase(phrase: schemas.PhraseCreate, db: Session = Depends(get_db)):
     """
     Create a new phrase
@@ -61,7 +61,7 @@ def create_phrase(phrase: schemas.PhraseCreate, db: Session = Depends(get_db)):
     return defs.create_phrase(db, phrase)
 
 
-@app.get("/translations/", response_model=list[schemas.Translation])
+@app.get("/translations/", tags=["Translations"], response_model=list[schemas.Translation])
 def get_translations_by_phrase(phrase: str, language_id: int, db: Session = Depends(get_db)):
     """
     Get translations for a specific phrase text and language ID
@@ -74,7 +74,7 @@ def get_translations_by_phrase(phrase: str, language_id: int, db: Session = Depe
     return translations
 
 
-@app.get("/translations/{phrase_id}", response_model=list[schemas.Translation])
+@app.get("/translations/{phrase_id}", tags=["Translations"], response_model=list[schemas.Translation])
 def get_translations_by_phrase_id(phrase_id: int, db: Session = Depends(get_db)):
     """
     Get translations for a specific phrase ID
@@ -86,7 +86,7 @@ def get_translations_by_phrase_id(phrase_id: int, db: Session = Depends(get_db))
     return translations
 
 
-@app.post("/translations", response_model=schemas.Translation)
+@app.post("/translations", tags=["Translations"], response_model=schemas.Translation)
 def create_translation(translation: schemas.TranslationCreate, db: Session = Depends(get_db)):
     """
     Create a new translation for a specific phrase ID and language ID
@@ -106,7 +106,7 @@ def create_translation(translation: schemas.TranslationCreate, db: Session = Dep
     return defs.create_translation(db, translation)
 
 
-@app.post("/flag_translation/", response_model=schemas.FlagResponse)
+@app.post("/flag_translation/", tags=["Flags"], response_model=schemas.FlagResponse)
 async def flag_translation(flag: schemas.FlagCreate, db: Session = Depends(get_db)):
     """
     Flag a translation
