@@ -61,7 +61,7 @@ class Translation(TranslationBase):
 class FlagBase(BaseModel):
     translation_id: int
     user_id: int
-    flag: Optional[str] = None
+    flag: str
     comment: Optional[str] = None
 
 
@@ -69,7 +69,7 @@ class FlagCreate(FlagBase):
     pass
 
 
-class Flag(FlagBase):
+class FlagResponse(FlagBase):
     id: int
     created_at: datetime
     updated_at: Optional[datetime]

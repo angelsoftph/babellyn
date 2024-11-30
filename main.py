@@ -104,3 +104,19 @@ def create_translation(translation: schemas.TranslationCreate, db: Session = Dep
         raise HTTPException(status_code=404, detail="User not found")
 
     return defs.create_translation(db, translation)
+
+
+@app.post("/flag_translation/", response_model=schemas.FlagResponse)
+async def flag_translation(flag: schemas.FlagCreate, db: Session = Depends(get_db)):
+    """
+    Flag a translation
+    0: Incorrect
+    1: Accurate
+    """
+
+    if flag.flag not in ["0", "1"]:
+        raise HTTPException(status_code=400, detail="Flag must be either '0' or '1'.")
+
+    new_flag = defs.flag_translation(db, flag)
+
+    return new_flag

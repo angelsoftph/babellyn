@@ -88,7 +88,7 @@ def delete_translation(db: Session, translation_id: int):
     db.commit()
     return translation
 
-def create_flag(db: Session, flag: schemas.FlagCreate):
+def flag_translation(db: Session, flag: schemas.FlagCreate):
     db_flag = models.Flag(**flag.model_dump())
     db.add(db_flag)
     db.commit()
