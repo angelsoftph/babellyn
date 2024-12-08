@@ -1,4 +1,6 @@
+import bcrypt
 from sqlalchemy import func
+from sqlalchemy.orm import joinedload
 from sqlalchemy.orm import Session
 import models, schemas
 
@@ -93,4 +95,31 @@ def flag_translation(db: Session, flag: schemas.FlagCreate):
     db.add(db_flag)
     db.commit()
     db.refresh(db_flag)
-    return db_flag
+
+    user = db.query(models.User).filter(models.User.id == db_flag.user_id).first()
+    uname = user.uname if user else "Unknown"
+
+    return {
+        "id": db_flag.id,
+        "translation_id": db_flag.translation_id,
+        "user_id": db_flag.user_id,
+        "flag": db_flag.flag,
+        "comment": db_flag.comment,
+        "created_at": db_flag.created_at,
+        "updated_at": db_flag.updated_at,
+        "uname": uname
+    }
+
+def get_flags_by_translation_id(db: Session, translation_id: int):
+    return db.query(models.Flag).options(joinedload(models.Flag.user)).filter(models.Flag.translation_id == translation_id).all()
+
+def create_user(db: Session, user: schemas.UserCreate):
+    hash = bcrypt.hashpw(user.pword.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    user_data = user.model_dump()
+    user_data['pword'] = hash
+
+    db_user = models.User(**user_data)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user

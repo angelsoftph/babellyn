@@ -106,6 +106,31 @@ def create_translation(translation: schemas.TranslationCreate, db: Session = Dep
     return defs.create_translation(db, translation)
 
 
+@app.get("/get_flags/{translation_id}", tags=["Flags"], response_model=list[schemas.FlagResponse])
+async def get_flags(translation_id: int, db: Session = Depends(get_db)):
+    """
+    Get flags for a specific translation ID
+    """
+
+    flags = defs.get_flags_by_translation_id(db, translation_id)
+    if not flags:
+        raise HTTPException(status_code=404, detail="No flags found for the given translation_id")
+
+    return [
+        {
+            "id": flag.id,
+            "translation_id": flag.translation_id,
+            "user_id": flag.user_id,
+            "flag": flag.flag,
+            "comment": flag.comment,
+            "created_at": flag.created_at,
+            "updated_at": flag.updated_at,
+            "uname": flag.user.uname
+        }
+        for flag in flags
+    ]
+
+
 @app.post("/flag_translation/", tags=["Flags"], response_model=schemas.FlagResponse)
 async def flag_translation(flag: schemas.FlagCreate, db: Session = Depends(get_db)):
     """
@@ -120,3 +145,12 @@ async def flag_translation(flag: schemas.FlagCreate, db: Session = Depends(get_d
     new_flag = defs.flag_translation(db, flag)
 
     return new_flag
+
+
+@app.post("/users", tags=["Users"], response_model=schemas.User)
+def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    """
+    Register a new user
+    """
+
+    return defs.create_user(db, user)

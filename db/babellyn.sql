@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2024 at 08:55 AM
+-- Generation Time: Dec 08, 2024 at 05:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -53,7 +53,9 @@ CREATE TABLE `flags` (
 
 INSERT INTO `flags` (`id`, `translation_id`, `user_id`, `flag`, `comment`, `created_at`, `updated_at`) VALUES
 (1, 1, 2, '1', 'Accurate!', '2024-11-30 02:31:37', NULL),
-(2, 2, 2, '1', 'Good', '2024-11-30 02:35:04', NULL);
+(2, 1, 3, '1', 'This is a good translation', '2024-11-30 02:35:04', '2024-12-08 16:11:55'),
+(25, 14, 2, '1', 'This is correct', '2024-12-08 16:13:49', NULL),
+(26, 8, 2, '1', 'This is correct', '2024-12-08 16:19:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -79,7 +81,7 @@ INSERT INTO `languages` (`id`, `name`, `story`) VALUES
 (5, 'Kapampangan', 'Kapampangan is an Austronesian language, and one of the eight major languages of the Philippines. It is the primary and predominant language of the entire province of Pampanga and southern Tarlac, on the southern part of Luzon\'s central plains geographic '),
 (6, 'Waray', 'Waray is an Austronesian language and the fifth-most-spoken native regional language of the Philippines, native to Eastern Visayas.'),
 (7, 'Chavacano', 'Chavacano is a group of Spanish-based creole language varieties spoken in the Philippines. The variety spoken in Zamboanga City, located in the southern Philippine island group of Mindanao, has the highest concentration of speakers.'),
-(8, 'Spanish', 'Spanish is the fourth most spoken language in the world. It is spoken by over 548 million speakers, 474.7 million of which are native speakers. It is the official language of 20 countries — 18 in America, one in Europe, and one in Africa — as well as the ');
+(8, 'Bicolano', 'Bikol is an Austronesian language spoken by the Bicolanos, primarily in the Bicol Region of southern Luzon, Philippines');
 
 -- --------------------------------------------------------
 
@@ -310,8 +312,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `uname`, `email`, `pword`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@babellyn.com', '', '2024-11-16 10:41:02', NULL),
-(2, 'boybastos', 'boy@bastos.com', '', '2024-11-30 02:15:24', NULL);
+(1, 'admin', 'admin@babellyn.com', '$2b$12$fy1tR1/Vrq4L9ibkjvVgBO1gFzqL1p3BdPxHRJgpnAuZy3X..cY4G', '2024-11-16 10:41:02', '2024-12-08 15:44:44'),
+(2, 'boybastos', 'boy@bastos.com', '$2b$12$fy1tR1/Vrq4L9ibkjvVgBO1gFzqL1p3BdPxHRJgpnAuZy3X..cY4G', '2024-11-30 02:15:24', '2024-12-08 15:44:41'),
+(3, 'jackcollins', 'jack@collins.com', '$2b$12$fy1tR1/Vrq4L9ibkjvVgBO1gFzqL1p3BdPxHRJgpnAuZy3X..cY4G', '2024-12-08 15:34:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -380,13 +383,13 @@ ALTER TABLE `words`
 -- AUTO_INCREMENT for table `flags`
 --
 ALTER TABLE `flags`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `languages`
 --
 ALTER TABLE `languages`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `phrases`
@@ -404,7 +407,7 @@ ALTER TABLE `translations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `words`

@@ -32,7 +32,7 @@ class Translation(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     trans = Column(String, nullable=False)
     created_at = Column(DateTime, default=func.now(), nullable=False)
-    updated_at = Column(DateTime, default=None, nullable=True)
+    updated_at = Column(DateTime, default=None, onupdate=func.now(), nullable=True)
 
     phrase = relationship("Phrase", back_populates="translations")
     language = relationship("Language", back_populates="translations")
@@ -44,8 +44,12 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
+    uname = Column(String, unique=True, nullable=False)
     email = Column(String, unique=True, nullable=False)
     pword = Column(String, nullable=False)
+    created_at = Column(DateTime, default=func.now(), nullable=False)
+    updated_at = Column(DateTime, default=None, onupdate=func.now(), nullable=True)
+
 
     translations = relationship("Translation", back_populates="user")
     flags = relationship("Flag", back_populates="user")
@@ -60,7 +64,7 @@ class Flag(Base):
     flag = Column(String, nullable=False)
     comment = Column(Text, nullable=True)
     created_at = Column(DateTime, default=func.now(), nullable=False)
-    updated_at = Column(DateTime, default=None, nullable=True)
+    updated_at = Column(DateTime, default=None, onupdate=func.now(), nullable=True)
 
     translation = relationship("Translation", back_populates="flags")
     user = relationship("User", back_populates="flags")

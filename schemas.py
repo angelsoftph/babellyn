@@ -58,6 +58,25 @@ class Translation(TranslationBase):
         from_attributes = True
 
 
+class UserBase(BaseModel):
+    uname: str
+    email: str
+    pword: str
+
+
+class UserCreate(UserBase):
+    pass
+
+
+class User(UserBase):
+    id: int
+    created_at: datetime
+    updated_at: Optional[datetime]
+
+    class Config:
+        from_attributes = True
+
+
 class FlagBase(BaseModel):
     translation_id: int
     user_id: int
@@ -71,6 +90,7 @@ class FlagCreate(FlagBase):
 
 class FlagResponse(FlagBase):
     id: int
+    uname: str
     created_at: datetime
     updated_at: Optional[datetime]
 
